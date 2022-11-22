@@ -24,7 +24,7 @@ class CityModel(mesa.Model):
         self.crashes = 0
         self.moves = 0
         driverSample = DriverAgent(self.next_id(), self, 0)
-        self.driverType = 4 # Solo se modifica segun el driver de cada quien
+        self.driverType = 2 # Solo se modifica segun el driver de cada quien
         self.datacollector = mesa.DataCollector(
             model_reporters= {
             'Crashes': CityModel.getNumberOfCrashes,
@@ -127,11 +127,25 @@ class CityModel(mesa.Model):
 
     @staticmethod
     def getTimeOfTrafficLightOn(model) -> int:
-        return 1
+        totalTime = 0
+        stoplights = [agent for agent in model.schedule.agents if type(agent) == SmartTrafficLightAgent]
+        for stoplight in stoplights:
+            if stoplight.color != "red":
+                totalTime += 1
+
+        
+        return totalTime
 
     @staticmethod
     def getsuccessRateWithoutCrash(model) -> int:
-        return 1
+        success = 0
+        if model.crashes > 0:
+            success = 0
+        else:
+            success += 1
+        return success            
+        
+
 
     @staticmethod
     def getMovesByDriver(model) -> int:

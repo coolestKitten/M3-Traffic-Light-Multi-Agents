@@ -46,7 +46,7 @@ def agent_portrayal(agent): # A color is assigned to each type of agent
     return portrayal
 
 params = {
-    "agents": 15,
+    "agents": 8,
     "time": 25
 }
 results = mesa.batch_run(
@@ -63,8 +63,8 @@ results_df = pd.DataFrame(results)
 
 congestion = pd.DataFrame(results_df, columns=['Congestion'])
 crashes = pd.DataFrame(results_df, columns=['Crashes'])
-sanity = pd.DataFrame(results_df, columns=['Sanity'])
-movesByDriver = pd.DataFrame(results_df, columns=['MovesByDriver'])
+##sanity = pd.DataFrame(results_df, columns=['Sanity'])
+##movesByDriver = pd.DataFrame(results_df, columns=['MovesByDriver'])
 
 """ congestion_filtered = congestion[(results_df.Step == 10)]
 crashes_filtered = crashes[(results_df.Step == 10)]
@@ -73,8 +73,8 @@ movesByDriver_filtered = movesByDriver[(results_df.Step == 10)] """
 
 congestion.plot()
 crashes.plot()
-sanity.plot()
-movesByDriver.plot()
+##sanity.plot()
+##movesByDriver.plot()
 # save the model data (stored in the pandas gini object) to CSV
 results_df.to_csv("model_data.csv")
 plt.show()
@@ -100,23 +100,23 @@ simulation_params = {
 }
 
 
-chartCrashes = ChartModule([{"Label": "Crashes", "Color": "Red"}], data_collector_name='datacollector')
+#chartCrashes = ChartModule([{"Label": "Crashes", "Color": "Red"}], data_collector_name='datacollector')
 chartCongestion = ChartModule([{"Label": "Congestion", "Color": "Red"}], data_collector_name='datacollector')
-chartSanity = ChartModule([{"Label": "Sanity", "Color": "Red"}], data_collector_name='datacollector')
+#chartSanity = ChartModule([{"Label": "Sanity", "Color": "Red"}], data_collector_name='datacollector')
 #chartTimeOfTrafficLightOn = ChartModule([{"Label": "TimeOfTrafficLightOn", "Color": "Blue"}], data_collector_name='datacollector')
 #chartSuccessRateWithoutCrash = ChartModule([{"Label": "SuccessRateWithoutCrash", "Color": "Blue"}], data_collector_name='datacollector')
-chartMovesByDriver = ChartModule([{"Label": "MovesByDriver", "Color": "Blue"}], data_collector_name='datacollector')
+#chartMovesByDriver = ChartModule([{"Label": "MovesByDriver", "Color": "Blue"}], data_collector_name='datacollector')
 
 grid = CanvasGrid(agent_portrayal, 21, 21, PIXELS_GRID, PIXELS_GRID)
 
 server = mesa.visualization.ModularServer(
     CityModel, [grid,
-                chartCrashes,
-                chartSanity,
+                ##chartCrashes,
+                ##chartSanity,
                 chartCongestion,
                 #chartTimeOfTrafficLightOn,
-                #chartSuccessRateWithoutCrash,
-                chartMovesByDriver], 
+                #chartSuccessRateWithoutCrash,chartMovesByDriver
+                ], 
     "Smart Traffic Light", simulation_params
 )
 
